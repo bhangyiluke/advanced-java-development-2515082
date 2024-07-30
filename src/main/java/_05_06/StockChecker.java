@@ -8,7 +8,7 @@ public class StockChecker {
         return stock;
     }
 
-    public void updateStock(int amount) {
+    public synchronized void updateStock(int amount) {
         stock -= amount;
     }
 }

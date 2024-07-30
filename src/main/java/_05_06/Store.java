@@ -1,11 +1,14 @@
 package _05_06;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Store {
 
     // Make this method a synchronized method
     static void purchase(StockChecker stockChecker, int amount) {
         int stock = stockChecker.getStock();
-        if(stock - amount < 0) {
+        if (stock - amount < 0) {
             System.out.println("Out of stock");
         } else {
             System.out.println("Item is in stock");
@@ -18,15 +21,38 @@ public class Store {
     public static void main(String[] args) {
 
         // Create a new StockChecker object.
+        System.out.println("Create a new StockChecker object.");
+        StockChecker stockChecker = new StockChecker();
 
         // Create an ExecutorService with a fixed thread pool of 4 threads
+        System.out.println("Create an ExecutorService with a fixed thread pool of 4 threads.");
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
 
         // Submit 4 tasks to the executor service.
 
         // In each task you should call the purchase method and pass in 20,
         // to represent a customer purchasing 20 items.
-
+        System.out.println("Submit 4 tasks to the executor service.");
+        executorService.submit(() -> stockChecker.updateStock(20));
+        executorService.submit(() -> stockChecker.updateStock(20));
+        executorService.submit(() -> stockChecker.updateStock(20));
+        executorService.submit(() -> stockChecker.updateStock(20));
+        // executorService.submit(() -> stockChecker.updateStock(20));
+        // executorService.submit(() -> stockChecker.updateStock(20));
+        // executorService.submit(() -> stockChecker.updateStock(20));
+        // executorService.submit(() -> stockChecker.updateStock(20));
+        // executorService.submit(() -> stockChecker.updateStock(20));
+        // executorService.submit(() -> stockChecker.updateStock(20));
         // Shut down the executor service.
+        // try {
+        //     Thread.sleep(100);
+        // } catch (InterruptedException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
+        System.out.println(String.format("%s total stock", stockChecker.getStock()));
+        System.out.println("Shut down the executor service");
+        executorService.shutdownNow();
 
     }
 
